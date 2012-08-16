@@ -1,1 +1,1 @@
-default[:rsyncd][:globals] = Hash.new
+default['rsyncd']['globals'] = Hash.new
