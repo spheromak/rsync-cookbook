@@ -6,7 +6,7 @@
 #
 #
 
-actions :add, :remove
+actions :add, :remove, :send_notification
 default_action :add
 
 # man rsyncd.conf for more info on each attribute
