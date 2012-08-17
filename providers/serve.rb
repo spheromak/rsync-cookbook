@@ -47,6 +47,7 @@ def write_conf
   # dunno think the current way is a bit of a cludge (attribute/LWRP mixed)
   template new_resource.config_path do
     source "rsyncd.conf.erb"
+    cookbook "rsync"
     owner "root"
     group "root"
     mode  0640
@@ -56,7 +57,7 @@ def write_conf
       :modules => rsync_modules
     )
     notifies :restart, "service[rsyncd]", :delayed
-    notifies :send_notification, new_resrouce, :immediately
+    notifies :send_notification, new_resource, :immediately
   end
 end
 
