@@ -1,8 +1,5 @@
 
 
-
-
-
 # expand snake_case to spaces
 def snake_to_space(string)
   string.to_s.gsub(/_/, " ")
@@ -45,7 +42,7 @@ def write_conf
 
   # TODO: make rsyncd globals a better interface than just attributes? 
   # dunno think the current way is a bit of a cludge (attribute/LWRP mixed)
-  template new_resource.config_path do
+  t = template new_resource.config_path do
     source "rsyncd.conf.erb"
     cookbook "rsync"
     owner "root"
@@ -57,8 +54,8 @@ def write_conf
       :modules => rsync_modules
     )
     notifies :restart, "service[rsyncd]", :delayed
-    notifies :send_notification, new_resource, :immediately
   end
+  new_resource.updated_by_last_action(t.updated?)
 end
 
 action :add do 
@@ -67,9 +64,5 @@ end
 
 action :remove do 
  write_conf
-end
-
-action :send_notification do
-  new_resource.updated_by_last_action(true)
 end
 
